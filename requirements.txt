@@ -1,0 +1,18 @@
+# humming-kernels==0.1.6
+kernels==0.14.1
+kernels-data==0.16.0
+# matplotlib-inline==0.2.2
+numpy==2.3.5
+pandas==3.0.3
+pyarrow==24.0.0
+# quack-kernels==0.5.0
+requests==2.34.2
+rustbpe==0.1.0
+tiktoken==0.13.0
+torch==2.11.0
+#torch_c_dlpack_ext==0.1.5
+#torch_memory_saver==0.0.9.post1
+#torchao==0.17.0
+#torchaudio==2.11.0
+#torchcodec==0.11.1
+#torchvision==0.26.0

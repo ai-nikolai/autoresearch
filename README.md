@@ -87,6 +87,21 @@ I think these would be the reasonable hyperparameters to play with. Ask your fav
 - [jsegov/autoresearch-win-rtx](https://github.com/jsegov/autoresearch-win-rtx) (Windows)
 - [andyluo7/autoresearch](https://github.com/andyluo7/autoresearch) (AMD)
 
+## Results:
+Time budget: 300s
+Gradient accumulation steps: 2
+step 00338 (99.9%) | loss: 3.042988 | lrm: 0.00 | dt: 906ms | tok/sec: 578,844 | mfu: 14.0% | epoch: 1 | remaining: 0s       
+---
+val_bpb:          1.081910
+training_seconds: 300.6
+total_seconds:    502.2
+peak_vram_mb:     45059.2
+mfu_percent:      13.86
+total_tokens_M:   177.7
+num_steps:        339
+num_params_M:     50.3
+depth:            8
+
 ## License
 
 MIT
