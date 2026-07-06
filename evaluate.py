@@ -16,7 +16,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from prepare import MAX_SEQ_LEN, TIME_BUDGET, Tokenizer, make_dataloader, evaluate_bpb
-from model import GPTConfig, GPT, MuonAdamW
 
 # ---------------------------------------------------------------------------
 # Hyperparameters (edit these directly, no CLI flags needed)
@@ -47,14 +46,18 @@ DEVICE_BATCH_SIZE = 128  # per-device batch size (reduce if OOM)
 # Setup: tokenizer, model, optimizer, dataloader
 # ---------------------------------------------------------------------------
 
-def build_model_config(depth):
+def build_model_config(depth, vocab_size):
     """Build model configuration based on depth."""
     base_dim = depth * ASPECT_RATIO
     model_dim = ((base_dim + HEAD_DIM - 1) // HEAD_DIM) * HEAD_DIM
     num_heads = model_dim // HEAD_DIM
     return GPTConfig(
-        sequence_len=MAX_SEQ_LEN, vocab_size=vocab_size,
-        n_layer=depth, n_head=num_heads, n_kv_head=num_heads, n_embd=model_dim,
+        sequence_len=MAX_SEQ_LEN, 
+        vocab_size=vocab_size,
+        n_layer=depth, 
+        n_head=num_heads, 
+        n_kv_head=num_heads, 
+        n_embd=model_dim,
         window_pattern=WINDOW_PATTERN,
     )
 
@@ -77,8 +80,55 @@ def get_weight_decay(progress):
     """Get weight decay based on training progress."""
     return WEIGHT_DECAY * (1 - progress)
 
-def main():
+def evaluate(file_str=None):
     """Main training and evaluation function."""
+    print("Filestring")
+    print(file_str)
+
+    global GPTConfig
+    global GPT
+    global MuonAdamW
+    if not file_str:
+        print("Loading from model.py")
+        # from model import GPTConfig, GPT, MuonAdamW
+        import importlib.util
+        import sys
+        spec = importlib.util.spec_from_file_location("model", "model.py")
+        model = importlib.util.module_from_spec(spec)
+        sys.modules["model"] = model
+        spec.loader.exec_module(model)
+        GPTConfig = model.GPTConfig
+        GPT = model.GPT
+        MuonAdamW = model.MuonAdamW
+    else:
+        print("Loading from file str or path.")
+        if os.path.exists(file_str):
+            print(os.path.exists(file_str))
+            with open(file_str, 'r', encoding='utf-8') as f:
+                content = f.read()
+        else:
+            content = file_str
+            # print(content)
+        import importlib.util
+        # Create a module from the string content
+        import tempfile
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
+            f.write(content)
+            temp_path = f.name
+        spec = importlib.util.spec_from_file_location("model", temp_path)
+        model = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(model)
+        GPTConfig = model.GPTConfig
+        GPT = model.GPT
+        MuonAdamW = model.MuonAdamW
+        os.unlink(temp_path)
+        print("this worked...")
+        # model_module = importlib.util.module_from_spec(spec)
+        # spec.loader.exec_module(model_module)
+        # GPTConfig = model_module.GPT_CONFIG
+        # GPT = model_module.GPT
+        # MuonAdamW = model_module.MuonAdamW
+
     t_start = time.time()
     torch.manual_seed(42)
     torch.cuda.manual_seed(42)
@@ -93,7 +143,8 @@ def main():
     print(f"Vocab size: {vocab_size:,}")
 
     # Build model config and create model
-    config = build_model_config(DEPTH)
+    config = build_model_config(DEPTH, vocab_size)
+
     print(f"Model config: {config.__dict__}")
 
     with torch.device("meta"):
@@ -233,5 +284,18 @@ def main():
     print(f"num_params_M:     {num_params / 1e6:.1f}")
     print(f"depth:            {DEPTH}")
 
+    return {
+        "combined_score" :   -val_bpb,
+        f"val_bpb":          val_bpb,
+        "training_seconds":  total_training_time,
+        f"total_seconds":    t_end - t_start,
+        f"peak_vram_mb":     peak_vram_mb,
+        f"mfu_percent":      steady_state_mfu,
+        f"total_tokens_M":   total_tokens / 1e6,
+        f"num_steps":        step,
+        f"num_params_M":     num_params / 1e6,
+        f"depth":            DEPTH,
+    }
+
 if __name__ == "__main__":
-    main()
+    evaluate()

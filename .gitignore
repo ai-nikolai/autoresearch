@@ -22,5 +22,10 @@ dev/
 # Results file
 results.tsv
 
-
 history.json
+
+out.txt
+
+# experiment folder
+openevolve_output
+my_experiment

@@ -10,8 +10,40 @@ pip3 install openevolve
 2. Running it.
 ```bash
 export OPENAI_API_KEY="sk-dummy"
-python openevolve-run.py model.py \
+CUDA_VISIBLE_DEVICES=2 python openevolve-run.py model.py \
   evaluate.py \
   --config config.yaml \
-  --iterations 10
+  --iterations 10 \
+  --output my_experiment | tee > out.txt
+```
+
+3. testing:
+```bash
+python3 prepare.py
+CUDA_VISIBLE_DEVICES=2 python3 evaluate.py 
+```
+
+## Other useful commands:
+```bash
+source ~/miniconda3/etc/profile.d/conda.sh
+
+conda activate env_robust_kernelbench 
+```
+
+### Slurm:
+```bash
+salloc --partition=interactive-gpu --gres=gpu:h200:3 --time=04:00:00 --ntasks=3
+srun --jobid=100740 --pty bash
+```
+
+### LLM Serving
+
+1. Serving LLM
+```bash
+python3 -m sglang.launch_server \
+--model-path Qwen/Qwen3-Coder-Next \
+--tensor-parallel-size 2 \
+--tool-call-parser qwen3_coder \
+--host 0.0.0.0 \
+--port 30000
 ```

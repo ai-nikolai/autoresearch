@@ -17,6 +17,9 @@ fa3 = get_kernel(repo, trust_remote_code=True).flash_attn_interface
 # GPT Model
 # ---------------------------------------------------------------------------
 
+# ###########
+# THIS IS A KEY CLASS THAT NEEDS TO BE CALLED THE SAME FOR THE OPTIMISED VERSION. The content can and should change.
+# ###########
 class GPTConfig:
     def __init__(self, sequence_len=2048, vocab_size=32768, n_layer=12, n_head=6,
                  n_kv_head=6, n_embd=768, window_pattern="SSSL"):
@@ -110,6 +113,9 @@ class Block(nn.Module):
         return x
 
 
+# ###########
+# THIS IS A KEY CLASS THAT NEEDS TO BE CALLED THE SAME FOR THE OPTIMISED VERSION. The content can and should change.
+# ###########
 class GPT(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -342,7 +348,9 @@ def muon_step_fused(stacked_grads, stacked_params, momentum_buffer, second_momen
     mask = (g * stacked_params) >= 0
     stacked_params.sub_(lr * g + lr * wd * stacked_params * mask)
 
-
+# ###########
+# THIS IS A KEY CLASS THAT NEEDS TO BE CALLED THE SAME FOR THE OPTIMISED VERSION. The content can and should change.
+# ###########
 class MuonAdamW(torch.optim.Optimizer):
     """Combined optimizer: Muon for 2D matrix params, AdamW for others."""
 
