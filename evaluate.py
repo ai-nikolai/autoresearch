@@ -297,5 +297,14 @@ def evaluate(file_str=None):
         f"depth":            DEPTH,
     }
 
+    # GPU cleanup: clear cache and reset memory tracking
+    del model
+    del optimizer
+    del train_loader
+    del x, y
+    torch.cuda.empty_cache()
+    torch.cuda.reset_peak_memory_stats()
+    gc.collect()
+
 if __name__ == "__main__":
     evaluate()
