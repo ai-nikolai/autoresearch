@@ -26,14 +26,13 @@ CUDA_VISIBLE_DEVICES=2 python3 evaluate.py
 ## Other useful commands:
 ```bash
 source ~/miniconda3/etc/profile.d/conda.sh
-
 conda activate env_robust_kernelbench 
 ```
 
 ### Slurm:
 ```bash
-salloc --partition=interactive-gpu --gres=gpu:h200:3 --time=04:00:00 --ntasks=3
-srun --jobid=100740 --pty bash
+salloc --partition=interactive-gpu --gres=gpu:h200:3 --time=08:00:00 --ntasks=3
+srun --jobid=100798 --pty bash
 ```
 
 ### LLM Serving
