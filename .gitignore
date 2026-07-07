@@ -34,3 +34,7 @@ my_experiment*
 experiment_*
 
 *.sif
+
+.cache
+
+env_*

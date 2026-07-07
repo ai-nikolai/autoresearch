@@ -1,0 +1,14 @@
+Bootstrap: localimage
+From: mini_code_torch.sif
+
+%post
+    # Install mini-code-cli via pip
+    pip3 install mini-code-cli>=0.0.8.1 --break-system-packages
+    pip3 install pyarrow>=21.0.0 --break-system-packages
+    pip3 install rustbpe>=0.1.0 --break-system-packages
+    pip3 install tiktoken>=0.11.0 --break-system-packages
+    pip3 install kernels>=0.11.7 --break-system-packages
+    pip3 install matplotlib>=3.10.8 --break-system-packages
+    pip3 install numpy>=2.2.6 --break-system-packages
+    pip3 install pandas>=2.3.3 --break-system-packages
+    pip3 install requests>=2.32.0 --break-system-packages
