@@ -32,7 +32,7 @@ conda activate env_robust_kernelbench
 ### Slurm:
 ```bash
 salloc --partition=interactive-gpu --gres=gpu:h200:3 --time=08:00:00 --ntasks=3
-srun --jobid=100798 --pty bash
+srun --jobid=100812 --pty bash
 ```
 
 ### LLM Serving
@@ -53,3 +53,21 @@ curl -v http://0.0.0.0:30000/health
 # OR
 python -c "import urllib.request; req = urllib.request.Request('http://0.0.0.0:30000/health'); resp = urllib.request.urlopen(req); print(f'HTTP/1.1 {resp.status} {resp.reason}'); [print(f'{k}: {v}') for k, v in resp.headers.items()]; print(); print(resp.read().decode())"
 ```
+
+
+<!-- 
+```bash
+
+# 1. Install uv project manager (if you don't already have it)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# 2. Install dependencies
+uv sync
+
+# 3. Download data and train tokenizer (one-time, ~2 min)
+uv run prepare.py
+
+# 4. Manually run a single training experiment (~5 min)
+uv run train.py
+``` 
+-->

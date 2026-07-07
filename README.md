@@ -25,8 +25,9 @@ APPTAINERENV_CUDA_VISIBLE_DEVICES=2 apptainer shell --containall --bind /hx2-wek
 
 # Inside apptainer:
 cd /workspace
-mini-code --auto-mode --agent-md program.md --enable-shell
-# Prompt: Let's start the experiments with train.py
+# pip3 install kernels==0.14.1 --break-system-packages
+export HF_HOME="/workspace"
+mini-code --auto-mode --agent-md program.md --enable-shell --prompt "Let's start the experiments with train.py" --cache-dir "./.cache/mini_code/sessions/"
 ```
 
 (C) Nikolai Rozanov - 2026 - Present

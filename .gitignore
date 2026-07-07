@@ -38,3 +38,8 @@ experiment_*
 .cache
 
 env_*
+
+classic/hub
+classic/xet
+
+run.log
