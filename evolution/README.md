@@ -46,3 +46,10 @@ python3 -m sglang.launch_server \
 --host 0.0.0.0 \
 --port 30000
 ```
+
+2. Testing it's running:
+```bash
+curl -v http://0.0.0.0:30000/health
+# OR
+python -c "import urllib.request; req = urllib.request.Request('http://0.0.0.0:30000/health'); resp = urllib.request.urlopen(req); print(f'HTTP/1.1 {resp.status} {resp.reason}'); [print(f'{k}: {v}') for k, v in resp.headers.items()]; print(); print(resp.read().decode())"
+```

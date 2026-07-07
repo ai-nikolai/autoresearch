@@ -25,9 +25,12 @@ results.tsv
 history.json
 
 out.txt
+help.txt
 
 # experiment folder
 openevolve_output
 my_experiment
 my_experiment*
 experiment_*
+
+*.sif

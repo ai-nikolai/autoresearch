@@ -1,0 +1,7 @@
+Bootstrap: docker
+From: python:3.11.15-slim
+
+%post
+    pip install mini-code-cli   # install any packages you need
+
+#command to build: `apptainer build mini_code.sif apptainer_python.def`
