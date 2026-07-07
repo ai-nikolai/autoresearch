@@ -29,3 +29,5 @@ out.txt
 # experiment folder
 openevolve_output
 my_experiment
+my_experiment*
+experiment_*
