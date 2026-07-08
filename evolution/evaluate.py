@@ -285,7 +285,7 @@ def evaluate(file_str=None):
     print(f"depth:            {DEPTH}")
 
     return {
-        "combined_score" :   -val_bpb,
+        "combined_score" :   2.0-val_bpb,
         f"val_bpb":          val_bpb,
         "training_seconds":  total_training_time,
         f"total_seconds":    t_end - t_start,

@@ -14,7 +14,7 @@ CUDA_VISIBLE_DEVICES=2 python openevolve-run.py model.py \
   evaluate.py \
   --config config.yaml \
   --iterations 10 \
-  --output my_experiment | tee > out.txt
+  --output experiment_1 | tee > out.txt
 ```
 
 3. testing:
@@ -26,13 +26,15 @@ CUDA_VISIBLE_DEVICES=2 python3 evaluate.py
 ## Other useful commands:
 ```bash
 source ~/miniconda3/etc/profile.d/conda.sh
-conda activate env_robust_kernelbench 
+conda activate env_kb
+# or
+conda activate env_robust_kernelbench
 ```
 
 ### Slurm:
 ```bash
 salloc --partition=interactive-gpu --gres=gpu:h200:3 --time=08:00:00 --ntasks=3
-srun --jobid=100812 --pty bash
+srun --pty --overlap --jobid=100812 bash
 ```
 
 ### LLM Serving
@@ -52,6 +54,11 @@ python3 -m sglang.launch_server \
 curl -v http://0.0.0.0:30000/health
 # OR
 python -c "import urllib.request; req = urllib.request.Request('http://0.0.0.0:30000/health'); resp = urllib.request.urlopen(req); print(f'HTTP/1.1 {resp.status} {resp.reason}'); [print(f'{k}: {v}') for k, v in resp.headers.items()]; print(); print(resp.read().decode())"
+```
+
+3. Capturing tmux output:
+```bash
+tmux capture-pane -t 0:0.0 -S - && tmux save-buffer ~/output.txt
 ```
 
 
