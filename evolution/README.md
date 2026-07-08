@@ -17,7 +17,13 @@ CUDA_VISIBLE_DEVICES=2 python openevolve-run.py model.py \
   --output experiment_1 | tee > out.txt
 ```
 
-3. testing:
+3. Visualising results:
+```bash
+# python3 scripts/visualizer.py --path ../autoresearch/evolution/experiment_100836
+python3 scripts/visualizer.py --path ../autoresearch/evolution/experiment_100836/checkpoints --static-output main.html
+```
+
+4. testing:
 ```bash
 python3 prepare.py
 CUDA_VISIBLE_DEVICES=2 python3 evaluate.py 
