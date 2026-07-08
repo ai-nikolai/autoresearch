@@ -38,6 +38,12 @@ conda activate env_robust_kernelbench
 ```
 
 ### Slurm:
+1. Running the job:
+```bash
+ sbatch ./evolution/run_slurm.sh
+```
+
+2. Interactive session
 ```bash
 salloc --partition=interactive-gpu --gres=gpu:h200:3 --time=08:00:00 --ntasks=3
 srun --pty --overlap --jobid=100831 bash

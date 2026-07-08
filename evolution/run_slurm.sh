@@ -67,7 +67,7 @@ export OPENAI_API_KEY="sk-api-key"
 python openevolve-run.py model.py \
   evaluate.py \
   --config config.yaml \
-  --iterations 100 \
+  --iterations 200 \
   --output experiment_$SLURM_JOB_ID
 
 # ----------------------------------------------------------------------

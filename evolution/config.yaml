@@ -32,9 +32,9 @@ prompt:
 database:
   population_size: 50
   archive_size: 20
-  num_islands: 3
+  num_islands: 4
   elite_selection_ratio: 0.2
-  exploitation_ratio: 0.7
+  exploitation_ratio: 0.6
 
   # embedding_model: "text-embedding-3-small"
   similarity_threshold: 0.99
