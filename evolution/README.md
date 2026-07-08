@@ -20,7 +20,7 @@ CUDA_VISIBLE_DEVICES=2 python openevolve-run.py model.py \
 3. Visualising results:
 ```bash
 # python3 scripts/visualizer.py --path ../autoresearch/evolution/experiment_100836
-python3 scripts/visualizer.py --path ../autoresearch/evolution/experiment_100836/checkpoints --static-output main.html
+python3 ./openevolve/scripts/visualizer.py --path ./autoresearch/evolution/experiment_100855/checkpoints --static-output ./analysis_web
 ```
 
 4. testing:
