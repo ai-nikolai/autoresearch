@@ -61,6 +61,21 @@ python -c "import urllib.request; req = urllib.request.Request('http://0.0.0.0:3
 tmux capture-pane -t 0:0.0 -S - && tmux save-buffer ~/output.txt
 ```
 
+## OpenEvolve config
+NOTE: OpenEvolve maximises the evaluation...
+```bash
+# Optimal configuration discovered
+max_iterations: 200  # More is better
+diff_based_evolution: true  # For capable models
+temperature: 0.4  # For Gemini, 0.6 for others
+max_tokens: 16000  # Sweet spot
+num_top_programs: 3
+num_islands: 4
+migration_interval: 20
+migration_rate: 0.1
+include_artifacts: true  # Critical for performance
+```
+
 
 <!-- 
 ```bash
