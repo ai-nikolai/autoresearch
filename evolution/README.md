@@ -34,7 +34,8 @@ CUDA_VISIBLE_DEVICES=2 python3 evaluate.py
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate env_kb
 # or
-conda activate env_robust_kernelbench
+conda activate env_kb2
+# conda activate env_robust_kernelbench
 ```
 
 ### Slurm:
@@ -45,8 +46,8 @@ conda activate env_robust_kernelbench
 
 2. Interactive session
 ```bash
-salloc --partition=interactive-gpu --gres=gpu:h200:3 --time=08:00:00 --ntasks=3
-srun --pty --overlap --jobid=100831 bash
+salloc --partition=interactive-gpu --gres=gpu:h200:3 --time=08:00:00 --ntasks=1
+srun --pty --overlap --jobid=104361 bash
 tmux attach -t 0
 ```
 
@@ -72,6 +73,17 @@ python -c "import urllib.request; req = urllib.request.Request('http://0.0.0.0:3
 3. Capturing tmux output:
 ```bash
 tmux capture-pane -t 0:0.0 -S - && tmux save-buffer ~/output.txt
+```
+
+4. Compilation job:
+```bash
+export CUDA_VISIBLE_DEVICES=2
+
+jobs=(
+ "1 1 kernelbench"
+)
+
+python3 robust_kernelbench/run_main.py     --inference 0     --version "v9_4"     --model Qwen3_Coder_30B_A3B_Instruct     --parent_prompt_type "kernelbench"     --num_samples 1     "${jobs[@]}" > out.txt
 ```
 
 ## OpenEvolve config
